@@ -23,7 +23,7 @@ https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code?in=terraf
 ## Quick Terraform Guide
 1. Run Docker
 2. Paste the following Terraform configuration into a file and name it ```main.tf```
-```    
+```hcl    
 terraform {
   required_providers {
     docker = {
@@ -49,9 +49,9 @@ resource "docker_container" "nginx" {
 }
 ```
 3. Initialize the project, which downloads a plugin that allows Terraform to interact with Docker.
-```terraform init```
+> ```terraform init```
 4. Provision the NGINX server container with ```apply```. When Terraform asks you to confirm type ```yes``` and press ```ENTER```.
-```terraform apply```
+> ```terraform apply```
 5. Verify the existence of the NGINX container by visiting localhost:8000 in your web browser or running ```docker ps``` to see the container.
 ```
 $ docker ps
