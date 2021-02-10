@@ -25,27 +25,37 @@ https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code?in=terraf
 2. Paste the following Terraform configuration into a file and name it ```main.tf```
 ```    
 terraform {
-        required_providers {
-            docker = {
-            source = "kreuzwerker/docker"
-            }
-        }
-        }
+  required_providers {
+    docker = {
+      source = "kreuzwerker/docker"
+    }
+  }
+}
 
-        provider "docker" {}
+provider "docker" {}
 
-        resource "docker_image" "nginx" {
-        name         = "nginx:latest"
-        keep_locally = false
-        }
+resource "docker_image" "nginx" {
+  name         = "nginx:latest"
+  keep_locally = false
+}
 
-        resource "docker_container" "nginx" {
-        image = docker_image.nginx.latest
-        name  = "tutorial"
-        ports {
-            internal = 80
-            external = 8000
-        }
-        }
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.latest
+  name  = "tutorial"
+  ports {
+    internal = 80
+    external = 8000
+  }
+}
 ```
-
+3. Initialize the project, which downloads a plugin that allows Terraform to interact with Docker.
+```terraform init```
+4. Provision the NGINX server container with ```apply```. When Terraform asks you to confirm type ```yes``` and press ```ENTER```.
+```terraform apply```
+5. Verify the existence of the NGINX container by visiting localhost:8000 in your web browser or running ```docker ps``` to see the container.
+```
+$ docker ps
+CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS              PORTS                    NAMES
+425d5ee58619        e791337790a6              "nginx -g 'daemon of…"   20 seconds ago      Up 19 seconds       0.0.0.0:8000->80/tcp     tutorial
+```
+6. To stop the container, run ```terraform destroy```.
