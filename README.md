@@ -18,3 +18,34 @@ Terraform is the infrastructure as code tool from HashiCorp. It is a tool for bu
 
 https://learn.hashicorp.com/collections/terraform/aws-get-started
 https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code?in=terraform/aws-get-started
+
+
+## Quick Terraform Guide
+1. Run Docker
+2. Paste the following Terraform configuration into a file and name it ```main.tf```
+```    
+terraform {
+        required_providers {
+            docker = {
+            source = "kreuzwerker/docker"
+            }
+        }
+        }
+
+        provider "docker" {}
+
+        resource "docker_image" "nginx" {
+        name         = "nginx:latest"
+        keep_locally = false
+        }
+
+        resource "docker_container" "nginx" {
+        image = docker_image.nginx.latest
+        name  = "tutorial"
+        ports {
+            internal = 80
+            external = 8000
+        }
+        }
+```
+
