@@ -8,21 +8,21 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "3.27.0"
+      version = "3.27.0" #This has to be up to date
     }
   }
 }
 
 provider "aws" {
   profile = "default"
-  region = var.region
+  region = var.region #parameter from variables.tf file
 #   region  = "us-east-1"
 }
 
 resource "aws_instance" "LEMON_TEA" {
 
 #   ami           = "ami-096fda3c22c1c990a"
-  ami           = var.amis[var.region]
+  ami           = var.amis[var.region] #parameter from variables.tf file
   instance_type = "t2.micro"
 
   tags          = {
